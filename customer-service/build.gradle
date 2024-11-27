@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'dev.lobopf'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', "2023.0.0")
+  set('lombokVersion', '1.18.26')
+  set('springStarterWebVersion', '3.2.2')
+  set('netflixEurekaClientVersion', '4.1.0')
+  set('mysqlConnectorVersion', '8.0.32')
+  set('jakartaValidatorVersion', '3.0.2')
+  set('starterDataJpaVersion', '3.2.2')
+  set('starterValidationVersion', '3.2.2')
+}
+
+dependencies {
+  compileOnly "org.projectlombok:lombok:${lombokVersion}"
+  annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-web:${springStarterWebVersion}"
+  implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${netflixEurekaClientVersion}"
+  implementation "org.springframework.boot:spring-boot-starter-data-jpa:${starterDataJpaVersion}"
+  implementation "org.springframework.boot:spring-boot-starter-validation:${starterValidationVersion}"
+  implementation "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+  implementation "jakarta.validation:jakarta.validation-api:${jakartaValidatorVersion}"
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
